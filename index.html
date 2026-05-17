@@ -131,6 +131,24 @@ body{font-family:'DM Sans',sans-serif;background:var(--rx);color:#faf9f7;min-hei
   <div class="sb"><span class="dt">14/06/2026</span>domingo<br><span class="ig">@onixbrasiloficial</span></div>
 </div></div>
 <div style="background:rgba(232,160,32,0.06);border-bottom:1px solid rgba(232,160,32,0.12);padding:6px 0;"><div class="syncbar"><div class="dot spin" id="syncDot"></div><span id="syncTxt">Conectando...</span></div></div>
+<div style="background:#1a0038;border-bottom:2px solid rgba(232,160,32,0.3);padding:8px 0;">
+  <div style="max-width:980px;margin:0 auto;padding:6px 18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+    <span style="background:#E8A020;color:#1e0035;font-size:11px;font-weight:700;border-radius:6px;padding:5px 12px;white-space:nowrap;flex-shrink:0;">&#128178; Chave PIX</span>
+    <input id="pixInput" type="text" placeholder="Cole a chave PIX aqui para os compradores copiarem..." style="flex:1;min-width:180px;background:rgba(255,255,255,0.07);border:1px solid rgba(232,160,32,0.3);border-radius:7px;padding:7px 12px;color:#fff;font-size:13px;font-family:inherit;outline:none;"/>
+    <button id="pixBtn" onclick="copiarPix()" style="background:#E8A020;color:#1e0035;border:none;border-radius:7px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;">&#128203; Copiar</button>
+  </div>
+</div>
+<script>
+function copiarPix(){
+  var v=document.getElementById("pixInput").value.trim();
+  if(!v){alert("Cole a chave PIX no campo primeiro!");return;}
+  navigator.clipboard.writeText(v).then(function(){
+    var b=document.getElementById("pixBtn");
+    b.innerHTML="&#10003; Copiado!";b.style.background="#22c55e";
+    setTimeout(function(){b.innerHTML="&#128203; Copiar";b.style.background="#E8A020";},2000);
+  }).catch(function(){prompt("Copie a chave PIX:",v);});
+}
+</script>
 <div class="tabs-o"><div class="tabs-i" id="tabsEl"></div></div>
 <div class="main" id="mainEl"></div>
 <div class="ov" id="ovEl"><div class="md">
@@ -181,9 +199,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-var NOMES=["Paulo Sergio","Lucia","Andr\u00e9a","Leila Maria","Nilva","Elaine","Extra 1","Extra 2","Extra 3","Extra 4"];
+var NOMES=["Paulo Sergio","Lucia","Andr\u00e9a","Leila Maria","Nilva","Elaine","Thelma","Talisson","Gabriela","Extra 4"];
 var VALOR=15;
-var DIST={"0": [1, 19, 31, 33, 39, 40, 41, 62, 64, 66, 73, 76, 84, 86, 96, 110, 120, 124, 129, 131, 132, 133, 134, 135, 142], "1": [4, 17, 43, 50, 54, 61, 65, 67, 68, 82, 87, 89, 92, 93, 99, 102, 105, 111, 117, 119, 128, 137, 138, 146, 147], "2": [3, 5, 10, 15, 18, 22, 26, 32, 35, 37, 42, 52, 53, 70, 75, 77, 79, 83, 97, 103, 116, 123, 136, 139, 150], "3": [11, 25, 30, 38, 47, 48, 74, 80, 81, 85, 88, 91, 95, 100, 101, 106, 107, 112, 113, 118, 121, 125, 143, 144, 148], "4": [6, 12, 13, 14, 16, 20, 21, 28, 34, 44, 45, 46, 49, 55, 59, 69, 78, 90, 94, 114, 122, 126, 127, 141, 145], "5": [2, 7, 8, 9, 23, 24, 27, 29, 36, 51, 56, 57, 58, 60, 63, 71, 72, 98, 104, 108, 109, 115, 130, 140, 149], "6": [151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175], "7": [176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200], "8": [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225], "9": [226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250]};
+var DIST={"0": [1, 19, 31, 33, 39, 40, 41, 62, 64, 66, 73, 76, 84, 86, 96, 110, 120, 124, 129, 131, 132, 133, 134, 135, 142], "1": [4, 17, 43, 50, 54, 61, 65, 67, 68, 82, 87, 89, 92, 93, 99, 102, 105, 111, 117, 119, 128, 137, 138, 146, 147], "2": [3, 5, 10, 15, 18, 22, 26, 32, 35, 37, 42, 52, 53, 70, 75, 77, 79, 83, 97, 103, 116, 123, 136, 139, 150], "3": [11, 25, 30, 38, 47, 48, 74, 80, 81, 85, 88, 91, 95, 100, 101, 106, 107, 112, 113, 118, 121, 125, 143, 144, 148], "4": [6, 12, 13, 14, 16, 20, 21, 28, 34, 44, 45, 46, 49, 55, 59, 69, 78, 90, 94, 114, 122, 126, 127, 141, 145], "5": [2, 7, 8, 9, 23, 24, 27, 29, 36, 51, 56, 57, 58, 60, 63, 71, 72, 98, 104, 108, 109, 115, 130, 140, 149], "6": [159, 160, 166, 170, 173, 177, 180, 184, 187, 189, 194, 196, 199, 200, 202, 206, 207, 209, 210, 212, 214, 218, 219, 223, 224], "7": [153, 154, 155, 156, 157, 158, 161, 164, 167, 171, 174, 178, 179, 185, 186, 190, 191, 193, 195, 197, 198, 213, 216, 217, 220], "8": [151, 152, 162, 163, 165, 168, 169, 172, 175, 176, 181, 182, 183, 188, 192, 201, 203, 204, 205, 208, 211, 215, 221, 222, 225], "9": [226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250]};
 var dados={};
 NOMES.forEach(function(_,ci){dados[ci]={};DIST[ci].forEach(function(n){dados[ci][n]={v:false,nome:"",fone:""};});});
 var ativa=0,numAt=null,compAt=null;

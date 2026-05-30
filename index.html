@@ -248,14 +248,12 @@ document.addEventListener('_sendCD',function(e){
 
 window.enviarWpp=function(){
   if(!window._SC){alert("Gere a imagem primeiro!");return;}
-  // Baixar imagem automaticamente
   var a=document.createElement("a");
   a.download="Cartela_Onix.png";
   a.href=window._SC.toDataURL("image/png");
   a.click();
-  // Abrir WhatsApp com texto depois de um pequeno delay
   setTimeout(function(){
-    var txt="Doe R$ 15,00 e concorra a um ASPIRADOR DE PO ROBO 3 em 1: Aspira, varre e limpa, da AGRATTO.%0ASua doacao ajuda o Onix Brasil Vocal Internacional a chegar a 35a. Edicao do Circuito Canto Coral-Betim MG de 16 a 19 Jul 2026.%0AMais informacoes Whatsapp 62 9 9148-9893.%0A%0AChave PIX Rifa Onix: 01219270750 - Paulo Sergio Nunes Motta%0A%0AAcesse e escolha seu numero:%0Ahttps://luciakratz-arch.github.io/RIFA-ONIX/";
+    var txt="Doe R$ 15,00 e concorra a um ASPIRADOR DE PO ROBO 3 em 1: Aspira, varre e limpa, da AGRATTO.%0ASua doacao ajuda o Onix Brasil Vocal Internacional a chegar a 35a. Edicao do Circuito Canto Coral-Betim MG de 16 a 19 Jul 2026.%0AMais informacoes Whatsapp 62 9 9148-9893.%0A%0AChave PIX Rifa Onix: 01219270750 - Paulo Sergio Nunes Motta";
     window.open("https://wa.me/?text="+txt,"_blank");
   },800);
 };

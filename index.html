@@ -200,6 +200,16 @@ document.addEventListener('_sendCD',function(e){
     ctx.restore();
   }catch(ex){}
 
+  // Foto do robo no canto superior direito
+  try{
+    var rImg=document.getElementById("roboSrc");
+    var rSz=70,rX=W-rSz-10,rY=8;
+    ctx.save();
+    ctx.beginPath();ctx.rect(rX,rY,rSz,rSz);ctx.clip();
+    ctx.drawImage(rImg,rX,rY,rSz,rSz);
+    ctx.restore();
+  }catch(ex){}
+
   dist.forEach(function(n,i){
     var row=Math.floor(i/CW),col=i%CW;
     var x=pad+col*cW,y=hH+pad/2+row*cH;

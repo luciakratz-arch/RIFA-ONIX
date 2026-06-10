@@ -130,7 +130,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--rx);color:#faf9f7;min-hei
     <div class="pb-txt"><div class="m">&#129302; Agratto Praticci</div><div class="s">Aspirador de P&#243; 3 em 1<br>Aspira &middot; Varre &middot; Limpa</div></div></div>
   <div class="sb"><span class="dt">14/06/2026</span>domingo<br><span class="ig">@onixbrasiloficial</span></div>
 </div></div>
-<div style="background:rgba(232,160,32,0.06);border-bottom:1px solid rgba(232,160,32,0.12);padding:6px 0;"><div class="syncbar"><div class="dot spin" id="syncDot"></div><span id="syncTxt">Conectando...</span></div></div>
+<div style="background:rgba(232,160,32,0.06);border-bottom:1px solid rgba(232,160,32,0.12);padding:6px 0;"><div class="syncbar"><div class="dot spin" id="syncDot"></div><span id="syncTxt">Conectando...</span><button onclick="window.fazerBackup()" style="margin-left:auto;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);border:1px solid rgba(232,160,32,0.3);border-radius:14px;padding:3px 12px;font-size:11px;cursor:pointer;font-family:inherit;white-space:nowrap;">&#128190; Backup dos dados</button></div></div>
 <div style="background:#1a0038;border-bottom:2px solid rgba(232,160,32,0.3);padding:8px 0;"><div style="max-width:980px;margin:0 auto;padding:6px 18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;"><span style="background:#E8A020;color:#1e0035;font-size:11px;font-weight:700;border-radius:6px;padding:5px 12px;white-space:nowrap;flex-shrink:0;">&#128178; Chave PIX</span><input id="pixInput" type="text" value="Chave PIX Rifa Onix: 01219270750 - Paulo Sergio Nunes Motta" style="flex:1;min-width:180px;background:rgba(255,255,255,0.07);border:1px solid rgba(232,160,32,0.3);border-radius:7px;padding:7px 12px;color:#fff;font-size:13px;font-family:inherit;outline:none;"/><button id="pixBtn" onclick="copiarPix()" style="background:#E8A020;color:#1e0035;border:none;border-radius:7px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;">&#128203; Copiar</button></div></div>
 <div class="tabs-o"><div class="tabs-i" id="tabsEl"></div></div>
 <div class="main" id="mainEl"></div>
@@ -308,6 +308,23 @@ onValue(dbRef,function(snapshot){
 },function(){setSyncErr();});
 function salvar(ci,n,obj){setSyncSaving();set(ref(db,"cartelas/"+ci+"/"+n),obj).then(setSyncOk).catch(setSyncErr);}
 function remover(ci,n){setSyncSaving();remove(ref(db,"cartelas/"+ci+"/"+n)).then(setSyncOk).catch(setSyncErr);}
+window.fazerBackup=function(){
+  var bk={
+    geradoEm:new Date().toLocaleString("pt-BR"),
+    rifa:"Rifa Onix Brasil - sorteio 14/06/2026",
+    valorNumero:VALOR,
+    cartelas:NOMES.map(function(nm,ci){return {membro:nm,numeros:dados[ci]};})
+  };
+  var json=JSON.stringify(bk,null,2);
+  var blob=new Blob([json],{type:"application/json"});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement("a");
+  var hj=new Date();
+  function p2(x){return x<10?"0"+x:""+x;}
+  var nomeArq="backup-rifa-onix-"+p2(hj.getDate())+p2(hj.getMonth()+1)+hj.getFullYear()+".json";
+  a.href=url;a.download=nomeArq;a.click();
+  URL.revokeObjectURL(url);
+};
 function getCompradores(ci){
   var cd=dados[ci],mapa={};
   DIST[ci].forEach(function(n){if(cd[n]&&cd[n].v){var k=cd[n].nome.trim().toLowerCase();if(!mapa[k])mapa[k]={nome:cd[n].nome,fone:cd[n].fone,nums:[]};mapa[k].nums.push(n);}});
